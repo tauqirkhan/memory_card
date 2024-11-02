@@ -1,48 +1,45 @@
 import { useState, useEffect } from "react";
 
-import "./App.css";
-import fetchData from "./components/fetch";
-import processFetch from "./components/processFetch";
+import "./styles/App.css";
+import useData from "./hooks/useData";
+import Scores from "./components/Scores";
+import Card from "./components/Card";
 
 function App({ limit = 8 }) {
   const pokemonArray = useData(
     `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=0`
   );
 
-  useEffect(() => {
-    pokemonArray.forEach((pokemon) => {
-      console.log("Pokemon name: ", pokemon.name);
-      console.log("Pokemon image url: ", pokemon.image);
-    });
-  }, [pokemonArray]);
+  const [score, getScore] = useState(0);
+  const [highScore, getHighScore] = useState(0);
 
-  return <></>;
+  return (
+    <>
+      <header>
+        <h1>Pika Pair</h1>
+        <Scores score={score} highScore={highScore} />
+      </header>
+      <main>
+        {pokemonArray.map((pokemon) => (
+          <Card
+            key={pokemon.name}
+            name={pokemon.name}
+            imageUrl={pokemon.image}
+          />
+        ))}
+      </main>
+
+      <footer>
+        <p>&copy; 2024 Battleship Game. All rights reserved.</p>
+        <p>
+          Made with ❤️ by
+          <a href="https://github.com/tauqirkhan/battleship" target="_blank">
+            Tauqir Khan
+          </a>
+        </p>
+      </footer>
+    </>
+  );
 }
 
-function useData(url) {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    let ignore = false;
-
-    const fetchProcessData = async () => {
-      try {
-        const response1 = await fetchData(url);
-        const response2 = await processFetch(response1);
-
-        if (!ignore) setData(response2);
-      } catch (error) {
-        if (!ignore) console.log(error);
-      }
-    };
-
-    fetchProcessData();
-
-    return () => {
-      ignore = true;
-    };
-  }, [url]);
-
-  return data;
-}
 export default App;
