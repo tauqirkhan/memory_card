@@ -1,14 +1,22 @@
+:root {
+  --card-text: #050505;
+  --card-color: #9090df;
+}
+
 .card {
   background-color: lightcyan;
   border-radius: 20px;
   min-height: 320px;
   display: flex;
   flex-direction: column;
+  background-color: var(--card-color);
+  color: var(--card-text);
 }
 
 .card > p {
   margin-top: 15px;
   text-align: center;
+  font-size: 2em;
 }
 
 .card:hover {
@@ -17,6 +25,6 @@
 
 .image {
   width: 100%;
-  height: 250px;
+  height: 225px;
   /* object-fit: cover; */
 }

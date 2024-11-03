@@ -42,7 +42,7 @@ function App({ limit = 8 }) {
       </main>
 
       <footer>
-        <p>&copy; 2024 Battleship Game. All rights reserved.</p>
+        <p>&copy; 2024 Memory Game. All rights reserved.</p>
         <p>
           Made with ❤️ by
           <a href="https://github.com/tauqirkhan/memory_card" target="_blank">
