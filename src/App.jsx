@@ -31,6 +31,10 @@ function App({ limit = 8 }) {
             handleClick={handleClick}
             selectedArray={selectedArray}
             setSelectedArray={setSelectedArray}
+            score={score}
+            highScore={highScore}
+            setScore={setScore}
+            setHighScore={setHighScore}
           />
         ))}
       </main>
@@ -50,7 +54,21 @@ function App({ limit = 8 }) {
 
 export default App;
 
-function handleClick(name, selectedArray, setSelectedArray) {
-  if (selectedArray.includes(name)) setSelectedArray([]);
-  else setSelectedArray((prev) => [...prev, name]);
+function handleClick(
+  name,
+  selectedArray,
+  setSelectedArray,
+  score,
+  highScore,
+  setScore,
+  setHighScore
+) {
+  if (selectedArray.includes(name)) {
+    if (score > highScore) setHighScore(score);
+    setScore(0);
+    setSelectedArray([]);
+  } else {
+    setScore((prev) => prev + 1);
+    setSelectedArray((prev) => [...prev, name]);
+  }
 }
