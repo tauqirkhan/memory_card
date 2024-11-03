@@ -6,12 +6,15 @@ import Scores from "./components/Scores";
 import Card from "./components/Card";
 
 function App({ limit = 8 }) {
+  const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
+  const [selectedArray, setSelectedArray] = useState([]);
+
   const pokemonArray = useData(
     `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=0`
   );
 
-  const [score, getScore] = useState(0);
-  const [highScore, getHighScore] = useState(0);
+  console.log("Real length: ", selectedArray.length);
 
   return (
     <>
@@ -25,6 +28,9 @@ function App({ limit = 8 }) {
             key={pokemon.name}
             name={pokemon.name}
             imageUrl={pokemon.image}
+            handleClick={handleClick}
+            selectedArray={selectedArray}
+            setSelectedArray={setSelectedArray}
           />
         ))}
       </main>
@@ -33,7 +39,7 @@ function App({ limit = 8 }) {
         <p>&copy; 2024 Battleship Game. All rights reserved.</p>
         <p>
           Made with ❤️ by
-          <a href="https://github.com/tauqirkhan/battleship" target="_blank">
+          <a href="https://github.com/tauqirkhan/memory_card" target="_blank">
             Tauqir Khan
           </a>
         </p>
@@ -43,3 +49,8 @@ function App({ limit = 8 }) {
 }
 
 export default App;
+
+function handleClick(name, selectedArray, setSelectedArray) {
+  if (selectedArray.includes(name)) setSelectedArray([]);
+  else setSelectedArray((prev) => [...prev, name]);
+}
