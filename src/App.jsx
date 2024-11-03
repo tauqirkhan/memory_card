@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import "./styles/App.css";
 import useData from "./hooks/useData";
 import Scores from "./components/Scores";
 import Card from "./components/Card";
+import handleClick from "./utils/handleClick";
+import shuffle from "./utils/shuffle";
 
 function App({ limit = 8 }) {
-  const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(0);
-  const [selectedArray, setSelectedArray] = useState([]);
-
   const pokemonArray = useData(
     `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=0`
   );
 
-  console.log("Real length: ", selectedArray.length);
+  const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
+  const [selectedArray, setSelectedArray] = useState([]);
 
   return (
     <>
@@ -35,6 +35,8 @@ function App({ limit = 8 }) {
             highScore={highScore}
             setScore={setScore}
             setHighScore={setHighScore}
+            pokemonArray={pokemonArray}
+            shuffle={shuffle}
           />
         ))}
       </main>
@@ -53,22 +55,3 @@ function App({ limit = 8 }) {
 }
 
 export default App;
-
-function handleClick(
-  name,
-  selectedArray,
-  setSelectedArray,
-  score,
-  highScore,
-  setScore,
-  setHighScore
-) {
-  if (selectedArray.includes(name)) {
-    if (score > highScore) setHighScore(score);
-    setScore(0);
-    setSelectedArray([]);
-  } else {
-    setScore((prev) => prev + 1);
-    setSelectedArray((prev) => [...prev, name]);
-  }
-}

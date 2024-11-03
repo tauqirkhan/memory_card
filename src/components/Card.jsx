@@ -10,6 +10,8 @@ export default function Card({
   highScore,
   setScore,
   setHighScore,
+  pokemonArray,
+  shuffle,
 }) {
   return (
     <div
@@ -22,7 +24,9 @@ export default function Card({
           score,
           highScore,
           setScore,
-          setHighScore
+          setHighScore,
+          pokemonArray,
+          shuffle
         )
       }
     >
